@@ -73,3 +73,6 @@ function decodeHeatmap(heatmap, nrfloors, version) {
     img.src = "data:image/jpeg;base64, " + heatmap;
   });
 }
+
+windows.module = window.module || {};
+module.exports = {decodeHeatmap: decodeHeatmap};

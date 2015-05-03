@@ -1,0 +1,19 @@
+{
+  "name": "reginald",
+  "version": "0.1.0",
+  "description": "Convert base64 jpeg heatmaps into Float64Arrays",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lonerooftop/reginald"
+  },
+  "author": "Claude",
+  "license": "closed",
+  "bugs": {
+    "url": "https://github.com/Lonerooftop/reginald/issues"
+  },
+  "homepage": "https://github.com/Lonerooftop/reginald"
+}

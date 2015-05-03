@@ -1,0 +1,27 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "strict": 0,
+    "no-console": 0,
+    "comma-dangle": 0,
+    "key-spacing": false,
+    "no-loop-func": 0,
+    "new-cap": [2, {capIsNewExceptions: ["Router"]}],
+    "no-unused-vars": [2, {"vars": "all", "args": "none"}],
+    "no-constant-condition": 0,
+    "no-underscore-dangle": 0,
+    "no-lone-blocks": 0,
+    "curly": [2, "multi-line"]
+  },
+  "globals": {
+    "require": false,
+    "window": false,
+    "document": false,
+    "module": false,
+    "console": false,
+    "Buffer": false,
+  }
+}
