@@ -24,18 +24,16 @@ function _uint8ToFloat64(value, version) {
  * Float64Array is 1 dimensional. To get the value at (x, y), get the value
  * at position [x + y * width].
  *
- * @param {string} heatmap - the base64 heatmap
+ * @param {string} heatmapurl - url to a heatmap image
  * @param {int} nrfloors - the number of floors this heatmap represents
  * @param {int} version - the version of the james API used
  * @returns {Promise for {floors: Float64Array[], width: int, height: int}}
  */
-function decodeHeatmap(heatmap, nrfloors, version) {
+function decodeHeatmap(heatmapurl, nrfloors, version) {
   "use strict";
   return new Promise(function (resolve, reject) {
-    console.assert(typeof heatmap === "string", "heatmap should be a string");
-    console.assert(heatmap.search(/^[a-z-A-Z0-9\/+]*={0,2}$/) === 0,
-        "heatmap must be base64 encoded, may only contain a-zA-Z0-9/+, " +
-        "followed by at most 2 '=' signs");
+    console.assert(typeof heatmapurl === "string",
+        "heatmap should be a string");
     console.assert(typeof nrfloors === "number",
         "nrfloors should be a number");
     console.assert(typeof version === "number", "version should be a number");
@@ -70,9 +68,9 @@ function decodeHeatmap(heatmap, nrfloors, version) {
       }
       resolve({floors: floors, width: heatmapwidth, height: heatmapheight});
     };
-    img.src = "data:image/jpeg;base64, " + heatmap;
+    img.src = heatmapurl;
   });
 }
 
-windows.module = window.module || {};
+window.module = window.module || {};
 module.exports = {decodeHeatmap: decodeHeatmap};
