@@ -72,5 +72,42 @@ function decodeHeatmap(heatmapurl, nrfloors, version) {
   });
 }
 
+/**
+ * Like decodeHeatmap, but takes 2 heatmaps and interpolates between them
+ * partInto is a float between 0 and 1 indicating to which extend heatmap
+ * 0 should be taken, and to which extend heatmap1
+ * @param {string} heatmapurl0 - url to a heatmap image
+ * @param {string} heatmapurl1 - url to a heatmap image
+ * @param {float} partInto - [0...1] : 0 meaning all hm0, 1 meaning all 1
+ * @param {int} nrfloors - the number of floors this heatmap represents
+ * @param {int} version - the version of the james API used
+ * @returns {Promise for {floors: Float64Array[], width: int, height: int}}
+ */
+function decodeAndInterpolate(heatmapurl0, heatmapurl1, partInto, nrfloors,
+    version) {
+  return new Promise(function (resolve, reject) {
+    Promise.all([
+        decodeHeatmap(heatmapurl0, nrfloors, version),
+        decodeHeatmap(heatmapurl1, nrfloors, version)
+    ]).then(function (results) {
+      var floornr, i;
+      var floors = [];
+      for (floornr = 0; floornr < nrfloors; floornr++) {
+        floors[floornr] = new Float64Array(results[0].floors[floornr]);
+        for (i = 0; i < floors[floornr].length; i++) {
+          floors[floornr][i] = results[0].floors[floornr][i] +
+            partInto * (results[1].floors[floornr][i] -
+                results[0].floors[floornr][i]);
+        }
+      }
+      resolve({floors: floors, width: results[0].width,
+        height: results[0].height});
+    }).catch(function (err) {
+      reject(err);
+    });
+  });
+}
+
 window.module = window.module || {};
-module.exports = {decodeHeatmap: decodeHeatmap};
+module.exports = {decodeHeatmap: decodeHeatmap,
+  decodeAndInterpolate: decodeAndInterpolate};
