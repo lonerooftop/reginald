@@ -108,6 +108,8 @@ function decodeAndInterpolate(heatmapurl0, heatmapurl1, partInto, nrfloors,
   });
 }
 
-window.module = window.module || {};
+if (typeof window !== "undefined") {
+  window.module = window.module || {};
+}
 module.exports = {decodeHeatmap: decodeHeatmap,
   decodeAndInterpolate: decodeAndInterpolate};
